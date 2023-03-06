@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>Register User</h2>
+<hr>
+<br>
+<form  method="post" class="col-md-6" novalidate>
+{% csrf_token %}
+
+{% if form.username.errors %}
+<div class="alert alert-danger" role="alert">{{ form.username.errors }}</div>
+{% endif %}
+
+<div class="row mb-3">
+<label for="inputEmail3" class="col-sm-2 col-form-label">Username : </label>
+<div class="col-sm-10">
+{{ form.username }}
+</div>
+</div>
+{% if form.email.errors %}
+<div class="alert alert-danger" role="alert">{{ form.email.errors }}</div>
+{% endif %}
+<div class="row mb-3">
+<label for="inputPassword3" class="col-sm-2 col-form-label">Email : </label>
+<div class="col-sm-10">
+{{ form.email }}
+</div>
+</div>
+{% if form.password1.errors %}
+<div class="alert alert-danger">{{ form.password1.errors }}</div>
+{% endif %}
+<div class="row mb-3">
+<label for="inputPassword3" class="col-sm-2 col-form-label">Password : </label>
+<div class="col-sm-10">
+{{ form.password1 }}
+</div>
+</div>
+
+{% if form.password2.errors %}
+<div class="alert alert-danger">{{ form.password2.errors }}</div>
+{% endif %}
+<div class="row mb-3">
+<label for="inputPassword3" class="col-sm-2 col-form-label">Repeat password : </label>
+<div class="col-sm-10">
+{{ form.password2 }}
+</div>
+</div>
+
+{% if form.non_field_errors %}
+<div class="alert alert-danger">{{ form.non_field_errors }}</div>
+{% endif %}
+
+
+
+<button type="submit" class="btn btn-primary me-md-2">Register</button>
+
+
+</form>
+{% endblock %}

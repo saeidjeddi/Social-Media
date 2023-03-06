@@ -1,9 +1,21 @@
 <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
   <div class="container-fluid">
       <div class="navbar-nav">
-    <a class="nav-link active" href="/">Home</a>
+    <a class="nav-link active" href="{% url 'home:index' %}">Home</a>
 
+{% if request.user.is_authenticated %}
+    <div class="d-flex">
+    <a class="nav-link active" href="{% url 'account:logout' %}">Logout</a>
+        <span class="nav-link  active" style=" margin-left: 50px">|</span>
+    <p class="nav-link active" style="margin-left: 5px"> Hi {{ request.user.username }} </p>
+    </div>
+{% else %}
+    <a class="nav-link active" href="{% url 'account:register' %}">Register</a>
+    <a class="nav-link active" href="{% url 'account:login' %}">Login</a>
+{% endif %}
       </div>
   </div>
+
+
 
 </nav>

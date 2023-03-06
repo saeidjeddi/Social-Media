@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     # Add project
     'home.apps.HomeConfig',
+    'account.apps.AccountConfig',
 
 ]
 
