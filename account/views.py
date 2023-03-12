@@ -12,9 +12,12 @@ class RegisterView(View):
     form_class = RegisterForm
     template_name = 'account/register.html'
 
-    def get(self, request):
+    def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect('/')
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request):
 
         form = self.form_class()
         return render(request, self.template_name, {'form': form})
@@ -32,11 +35,13 @@ class RegisterView(View):
 class LoginView(View):
     form_class = LoginForm
     templates_name = 'account/login.html'
-
-    def get(self, request):
+    
+    def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect('/')
+        return super().dispatch(request, *args, **kwargs)
 
+    def get(self, request):
 
         form = self.form_class()
         return render(request, self.templates_name, {'form': form})
@@ -55,5 +60,7 @@ class LoginView(View):
 
 
 def logouts(request):
+    user = request.user.username
     logout(request)
+    messages.success(request, f'bye {user} 	👋', 'primary')
     return redirect("home:index")
