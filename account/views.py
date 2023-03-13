@@ -4,6 +4,7 @@ from .forms import RegisterForm, LoginForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
@@ -35,7 +36,7 @@ class RegisterView(View):
 class LoginView(View):
     form_class = LoginForm
     templates_name = 'account/login.html'
-    
+
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect('/')
@@ -59,8 +60,10 @@ class LoginView(View):
             return render(request, self.templates_name, {'form': form})
 
 
-def logouts(request):
-    user = request.user.username
-    logout(request)
-    messages.success(request, f'bye {user} 	👋', 'primary')
-    return redirect("home:index")
+class LogoutView(LoginRequiredMixin, View):
+    # login_url = '/account/login/'
+    def get(self, request):
+        user = request.user.username
+        logout(request)
+        messages.success(request, f'bye {user} 	👋', 'primary')
+        return redirect("home:index")
